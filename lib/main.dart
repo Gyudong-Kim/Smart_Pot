@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'control.dart';
-import 'status.dart';
-import 'creatColor.dart';
+import 'home.dart';
+import 'styles/color.dart';
 
 void main() {
   runApp(const MyApp());
@@ -13,58 +12,19 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(primarySwatch: createMaterialColor(Color(0xff153228))),
-      home: const MyHomePage(title: 'Smart Pot'),
+      debugShowCheckedModeBanner: false,
+      title: 'Smart Pot',
+      theme: ThemeData(
+          primarySwatch: createMaterialColor(Color(0xff153228)),
+          fontFamily: 'DoHyeonRegular'),
+      home: Home(),
+      builder: (context, child) => MediaQuery(
+        data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
+        child: GestureDetector(
+          onTap: () => FocusScope.of(context).requestFocus(FocusNode()),
+          child: child!,
+        ),
+      ),
     );
-  }
-}
-
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-
-  final String title;
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage>
-    with SingleTickerProviderStateMixin {
-  TabController? controller;
-
-  @override
-  void initState() {
-    super.initState();
-    controller = TabController(length: 2, vsync: this);
-  }
-
-  @override
-  void dispose() {
-    controller!.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(
-          title: Text(widget.title),
-        ),
-        body: TabBarView(
-          children: <Widget>[control(), status()],
-          controller: controller,
-        ),
-        bottomNavigationBar: TabBar(
-          tabs: <Tab>[
-            Tab(
-              icon: Icon(Icons.looks_one, color: Colors.blue),
-            ),
-            Tab(
-              icon: Icon(Icons.looks_two, color: Colors.blue),
-            )
-          ],
-          controller: controller,
-        ));
   }
 }
