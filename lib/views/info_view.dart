@@ -25,22 +25,23 @@ class _InfoPageState extends State<InfoPage> {
     var url = 'http://203.250.32.29:3000/view/home';
     var uri = Uri.parse(url);
     var response = await http.get(uri);
-    setState(() {
-      data = response.body;
-      print(data);
+    if (mounted) {
+      setState(() {
+        var jsonData = jsonDecode(response.body);
+        temp = jsonData['potList'][0]['sensorData']['temp'];
+        humi = jsonData['potList'][0]['sensorData']['humi'];
+        soilHumi = jsonData['potList'][0]['sensorData']['soilHumi'];
+        isWatering = jsonData['potList'][0]['stateData']['isWatering'] == 0
+            ? 'OFF'
+            : 'ON';
+        isLighting = jsonData['potList'][0]['stateData']['isLighting'] == 0
+            ? 'OFF'
+            : 'ON';
 
-      var jsonData = jsonDecode(data);
-      temp = jsonData['potList'][0]['sensorData']['temp'];
-      humi = jsonData['potList'][0]['sensorData']['humi'];
-      soilHumi = jsonData['potList'][0]['sensorData']['soilHumi'];
-      isWatering =
-          jsonData['potList'][0]['stateData']['isWatering'] == 0 ? 'OFF' : 'ON';
-      isLighting =
-          jsonData['potList'][0]['stateData']['isLighting'] == 0 ? 'OFF' : 'ON';
-
-      DateFormat now = DateFormat('yyyy-MM-dd HH:mm');
-      date = now.format(DateTime.now());
-    });
+        DateFormat now = DateFormat('yyyy-MM-dd HH:mm');
+        date = now.format(DateTime.now());
+      });
+    }
   }
 
   @override
