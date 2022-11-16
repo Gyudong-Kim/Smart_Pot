@@ -18,6 +18,13 @@ class MyApp extends StatelessWidget {
           primarySwatch: createMaterialColor(Color(0xff153228)),
           fontFamily: 'DoHyeonRegular'),
       home: Home(),
+      builder: (context, child) => MediaQuery(
+        data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
+        child: GestureDetector(
+          onTap: () => FocusScope.of(context).requestFocus(FocusNode()),
+          child: child!,
+        ),
+      ),
     );
   }
 }
