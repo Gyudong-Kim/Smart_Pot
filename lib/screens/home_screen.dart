@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
-import 'views/control_view.dart';
-import 'views/info_view.dart';
-import 'styles/color.dart';
+import 'pot_control_screen.dart';
+import 'pot_info_screen.dart';
+import '../theme/color_theme.dart';
 
-class Home extends StatefulWidget {
-  const Home({Key? key}) : super(key: key);
+class HomeScreen extends StatefulWidget {
+  const HomeScreen({Key? key}) : super(key: key);
 
   @override
-  State<Home> createState() => _HomeState();
+  State<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _HomeState extends State<Home> {
+class _HomeScreenState extends State<HomeScreen> {
   int _selectedIndex = 0;
 
-  static List<Widget> pages = <Widget>[InfoPage(), ControlPage()];
+  static List<Widget> pages = <Widget>[PotInfoScreen(), PotControlScreen()];
 
   void _onItemTapped(int index) {
     setState(() {
@@ -38,7 +38,7 @@ class _HomeState extends State<Home> {
             BottomNavigationBarItem(
                 icon: Icon(Icons.water_drop_outlined), label: 'Control'),
           ],
-          selectedItemColor: createMaterialColor(Color(0xff153228)),
+          selectedItemColor: ColorTheme.createMaterialColor(Color(0xff153228)),
           currentIndex: _selectedIndex,
           onTap: _onItemTapped,
         ));
